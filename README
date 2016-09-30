@@ -9,7 +9,8 @@ Table of Contents
 
     I.  About
    II.  Features
-  III.  Problems With Relative Search (And Why There Are Things That No Relative Searcher Supports)
+  III.  Problems With Relative Search (And Why There Are Things That No Relative
+          Searcher Supports)
    IV.  Using the Program
     V.  License
    VI.  Credits
@@ -18,8 +19,8 @@ Table of Contents
 I. About
 ========
 
-This program is for those who would like to venture into ROM hacking, but never could for the sheer
-reason that there weren't any tools available for their platform.
+This program is for those who would like to venture into ROM hacking, but never
+could for the sheer reason that there weren't any tools available for their platform.
 
 
 II. Features
@@ -31,50 +32,55 @@ II. Features
 * Table file output based on the results of a relative search (-mktbl)
 
 
-III. Problems With Relative Search (And Why There Are Things That No Relative Searcher Supports)
-================================================================================================
+III. Problems With Relative Search (And Why There Are Things That No Relative
+       Searcher Supports)
+=============================================================================
 
 There are two problems with the relative search technique:
 
-  * Multi-case searches cannot work. The program cannot assume (safely) that the set of uppercase letters
-    and the set of lowercase letters are in the same relative location to each other in the ROM as they
-    are in the ASCII standard.
-    
-    Note, however, that this only applies when the uppercase and lowercase characters are specified are
-    next to each other in the string. When wildcards are used, it doesn't.
-    
+  * Multi-case searches cannot work. The program cannot assume (safely) that the set
+    of uppercase letters and the set of lowercase letters are in the same relative
+    location to each other in the ROM as they are in the ASCII standard.
+
+    Note, however, that this only applies when the uppercase and lowercase characters
+    are specified are next to each other in the string. When wildcards are used, it
+    doesn't.
+
     Example:
-    
+
       $ ./opensearch-0.1 "/usbhdd/Archive/ROMs/Tetris.nes" ALE*EY
       OpenSearch 0.1  Copyright (C) 2009 mcpancakes
       Input: 41 4C 45  * 45 59
       ROM:   0A 15 0E 21 0E 22
       Offset: 0x30D7 (12503)
-    
+
       $ ./opensearch-0.1 "/usbhdd/Archive/ROMs/Tetris.nes" ALE*ey
       OpenSearch 0.1  Copyright (C) 2009 mcpancakes
       Input: 41 4C 45  * 65 79
       ROM:   0A 15 0E 21 0E 22
       Offset: 0x30D7 (12503)
-  
-  * Whether a character is lowercase or uppercase cannot be determined by the program alone.
-  
-    Example: "ALEXEY" yields the same results as "alexey" in a normal relative search:
-    
+
+  * Whether a character is lowercase or uppercase cannot be determined by the
+    program alone.
+
+    Example: "ALEXEY" yields the same results as "alexey" in a normal relative
+    search:
+
       $ ./opensearch-0.1 "/usbhdd/Archive/ROMs/Tetris.nes" ALEXEY
       OpenSearch 0.1  Copyright (C) 2009 mcpancakes
       Input: 41 4C 45 58 45 59
       ROM:   0A 15 0E 21 0E 22
       Offset: 0x30D7 (12503)
-    
+
       $ ./opensearch-0.1 "/usbhdd/Archive/ROMs/Tetris.nes" alexey
       OpenSearch 0.1  Copyright (C) 2009 mcpancakes
       Input: 61 6C 65 78 65 79
       ROM:   0A 15 0E 21 0E 22
       Offset: 0x30D7 (12503)
-    
-    OpenSearch will make the table file for the English alphabet of the case that you search for
-    (if you dont' use -autocaps), but the rest of the table making is up to the user (punctuation, etc.).
+
+    OpenSearch will make the table file for the English alphabet of the case that you
+    search for (if you dont' use -autocaps), but the rest of the table making is up
+    to the user (punctuation, etc.).
 
 
 IV. Using the Program
@@ -85,25 +91,36 @@ In a terminal window (command prompt in Windows):
 Linux: ./opensearch-0.1 <file> <string> [optional arguments]
 Windows: opensearch-0.1 <file> <string> [optional arguments]
 
-Your string can be up to 30 characters. You can enter more, but anything after the 30th character will be ignored.
+Your string can be up to 30 characters. You can enter more, but anything after the
+30th character will be ignored.
 
-Use wildcards sparingly. Personally, I only use them to find the values for punctuation characters, adding those
-to my table file manually (and even then, my search strings are long to ensure accuracy). The wildcard support
-for this program is somewhat "lazy" in that if you search "BOW*ER", when the program is looking through the ROM,
-it will not compare the characters before and in front of the wildcard (in this case W and E) with the ROMs. It
-just simply disregard (non-)relativity of bytes before and after a wildcard.
+Use wildcards sparingly. Personally, I only use them to find the values for
+punctuation characters, adding those to my table file manually (and even then, my
+search strings are long to ensure accuracy). The wildcard support for this program
+is somewhat "lazy" in that if you search "BOW*ER", when the program is looking
+through the ROM, it will not compare the characters before and in front of the
+wildcard (in this case W and E) with the ROMs. It just simply disregard
+(non-)relativity of bytes before and after a wildcard.
 
 For help, run the program with the "-help" argument.
 
-Optional Arguments:
-  -mktbl    --  Create a .tbl file for the English alphabet in the case that you searched for.
-  -autocaps <letter>  -- Automatically generate the uppercase alphabet for the ROM. <letter> is the letter that
-                         corresponds with the wildcard directly preceding the first letter of the string.
-  -disp <number>      -- Specify which occurrence of the string you want to be returned (and subsequently
-                         used to make a table file). If you use a number too high, you'll get a "String not
-                         found!" message.
-  -f        --  If a table file for the ROM already exists, the program will not automatically overwrite it.
-                Include this flag to force the overwriting.
+Options:
+
+  -mktbl              Create a .tbl file for the English alphabet in the case that
+                      you searched for.
+
+  -autocaps <letter>  Automatically generate the uppercase alphabet for the ROM.
+                      <letter> is the letter that corresponds with the wildcard
+                      directly preceding the first letter of the string.
+
+  -disp <number>      Specify which occurrence of the string you want to be
+                      returned (and subsequently used to make a table file). If
+                      you use a number too high, you'll get a "String not found!"
+                      message.
+
+  -f                  If a table file for the ROM already exists, the program will
+                      not automatically overwrite it. Include this flag to force the
+                      overwriting.
 
 
 V. License
@@ -117,8 +134,10 @@ VI. Credits
 
 Thanks to:
 
-  * Documentation writers on romhacking.net and the author(s) of the "Getting Started" page. It was there
-    that I read about ROM hacking for the first time and where I initially got interested.
+  * Documentation writers on romhacking.net and the author(s) of the "Getting Started"
+    page. It was there that I read about ROM hacking for the first time and where I
+    initially got interested.
   * SquidMan, for referring me to romhacking.net.
-  * Abel, a guy I'd correspond with and always keep up to date on the progress of OpenSearch.
-  
+  * Abel, a guy I'd correspond with and always keep up to date on the progress of
+    OpenSearch.
+
